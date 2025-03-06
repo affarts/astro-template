@@ -1,0 +1,77 @@
+@use "../utils/variables";
+@use "../utils/mixins";
+@use "../utils/functions";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: variables.$height-100vh;
+
+  &::-webkit-scrollbar:horizontal {
+    height: 0;
+    width: 0;
+    display: none;
+  }
+
+  &::-webkit-scrollbar-thumb:horizontal {
+    display: none;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  // Глобальный шрифт для резиновой верстки
+  font-size: functions.size-html(variables.$screen-414);
+
+  @include mixins.min-768 {
+    font-size: functions.size-html(variables.$screen-768);
+  }
+
+  @include mixins.min-1024 {
+    font-size: functions.size-html(variables.$screen-1920);
+  }
+
+  @include mixins.min-1536 {
+    font-size: functions.size-html(variables.$screen-1920);
+  }
+
+  @include mixins.min-1920 {
+    font-size: 16px;
+  }
+}
+
+body {
+  position: relative;
+  font-family: variables.$font-main;
+  color: variables.$color-black;
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+
+  &::before {
+    content: "";
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 99;
+    background-color: transparent;
+    transition: all 450ms ease;
+  }
+
+  &.is-overlayed {
+    &::before {
+      pointer-events: all;
+      background-color: #ffffff;
+    }
+  }
+}
+
+// z-Indexes
+// Overlay - 99
+// Header,Toc Progress - 11
+// Modals - 101

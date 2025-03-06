@@ -1,0 +1,78 @@
+// Font
+$default-font-size: 16px;
+$font-main: "ALSHauss", sans-serif;
+
+// Screen sizes
+$screen-1920: 1920px;
+$screen-1536: 1536px;
+$screen-1440: 1440px;
+$screen-1024: 1024px;
+$screen-768: 768px;
+$screen-576: 576px;
+$screen-414: 414px;
+$screen-375: 375px;
+
+:root {
+  --var-btw-block-spacing-xl: 6.25rem; /* 100px / 16px = 6.25rem */
+  --var-inner-block-spacing-l: 3.125rem; /* 50px / 16px = 3.125rem */
+  --var-inner-block-spacing-m: 2rem; /* 32px / 16px = 2rem */
+  --var-inner-block-spacing-s: 1.5rem; /* 24px / 16px = 1.5rem */
+  --var-blog-inner-block-spacing: 1.625rem; /* 26px / 16px = 1.625rem */
+
+  --var-screen-padding: 0.25rem; /* 4px / 16px = 0.25rem */
+  --var-block-content-padding: 0.75rem; /* 12px / 16px = 0.75rem */
+
+  --var-container-width: 22.56rem; /* 361px / 16px = 22.56rem */
+  --var-container-mini-width: 22.56rem; /* 361px / 16px = 22.56rem */
+
+  --var-big-blocks-corner: 0.75rem; /* 12px / 16px = 0.75rem */
+  --var-inside-blocks-corner: 0.56rem; /* 9px / 16px = 0.56rem */
+
+  --header-height: calc(60 / 16 * 1rem);
+}
+
+@media screen and (min-width: 1024px) {
+  :root {
+    --var-btw-block-spacing-xl: 12.5rem; /* 200px / 16px = 12.5rem */
+    --var-inner-block-spacing-l: 6.25rem; /* 100px / 16px = 6.25rem */
+    --var-inner-block-spacing-m: 3.75rem; /* 60px / 16px = 3.75rem */
+    --var-inner-block-spacing-s: 2.5rem; /* 40px / 16px = 2.5rem */
+    --var-blog-inner-block-spacing: 1.75rem; /* 28px / 16px = 1.75rem */
+
+    --var-screen-padding: 0.75rem; /* 12px / 16px = 0.75rem */
+    --var-block-content-padding: 3rem; /* 48px / 16px = 3rem */
+
+    --var-container-width: 88.5rem; /* 1416px / 16px = 88.5rem */
+    --var-container-mini-width: 43rem; /* 688px / 16px = 43.00rem */
+
+    --var-big-blocks-corner: 1rem; /* 16px / 16px = 1rem */
+    --var-inside-blocks-corner: 0.75rem; /* 12px / 16px = 0.75rem */
+
+    --header-height: calc(90 / 16 * 1rem);
+  }
+}
+
+// Spacing
+$btw-block-spacing-xl: var(--var-btw-block-spacing-xl);
+$inner-block-spacing-l: var(--var-inner-block-spacing-l);
+$inner-block-spacing-m: var(--var-inner-block-spacing-m);
+$inner-block-spacing-s: var(--var-inner-block-spacing-s);
+$blog-inner-block-spacing: var(--var-blog-inner-block-spacing);
+
+// Padding
+$screen-padding: var(--var-screen-padding);
+$block-content-padding: var(--var-block-content-padding);
+
+// Fix Width
+$container-width: var(--var-container-width);
+$container-mini-width: var(--var-container-mini-width);
+
+// Corners
+$big-blocks-corner: var(--var-big-blocks-corner);
+$inside-blocks-corner: var(--var-inside-blocks-corner);
+
+// Other
+$transition: all 0.3s ease;
+$height-100vh: calc(100 * var(--doc-height, 1vh));
+$height-header: var(--header-height);
+$height-footer: var(--footer-height);

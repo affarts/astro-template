@@ -1,0 +1,24 @@
+@use "../utils/variables";
+@use "../utils/mixins";
+@use "../utils/functions";
+
+// * {
+//   outline: 1px solid red;
+// }
+
+// Lock & States
+.locked {
+  overflow: hidden;
+}
+
+.locked-x {
+  overflow-x: hidden;
+}
+
+.pt-header {
+  padding-top: variables.$height-header;
+}
+
+.mt-header {
+  margin-top: variables.$height-header;
+}

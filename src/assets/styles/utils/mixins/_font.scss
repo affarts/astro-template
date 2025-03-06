@@ -1,0 +1,83 @@
+@use "../variables";
+@use "../functions";
+
+//*** Seo Headings ***//
+@mixin seo-heading {
+  font-style: normal;
+  font-weight: 400;
+}
+
+// Mobile
+@mixin seo-heading-1 {
+  @include seo-heading;
+}
+
+@mixin seo-heading-1 {
+  @include seo-heading;
+}
+
+@mixin seo-heading-2 {
+  @include seo-heading;
+}
+
+@mixin seo-heading-big-2 {
+  @include seo-heading;
+}
+
+@mixin seo-heading-3 {
+  @include seo-heading;
+}
+
+// Desktop
+@mixin seo-heading-1-dp {
+  @include seo-heading;
+}
+
+@mixin seo-heading-2-dp {
+  @include seo-heading;
+}
+
+@mixin seo-heading-2-big-dp {
+  @include seo-heading;
+}
+
+@mixin seo-heading-3-dp {
+  @include seo-heading;
+}
+
+
+//*** Headings ***//
+@mixin heading {
+  font-style: normal;
+  font-weight: 400;
+}
+
+//*** Text ***//
+@mixin text {
+  font-style: normal;
+  font-weight: 400;
+}
+
+// Text bold
+@mixin text-bold {
+  font-style: normal;
+  font-weight: 700;
+}
+
+/*** Blog ***/
+// Headings
+@mixin heading-blog {
+  font-style: normal;
+  font-weight: 400;
+}
+
+// Text
+@mixin text-blog {
+  font-style: normal;
+}
+
+/**  */
+
+/*** Special ***/
+
+/**  */

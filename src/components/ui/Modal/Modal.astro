@@ -1,0 +1,26 @@
+---
+export interface ModalProps {
+  id?: string
+  className?: string
+  title?: string
+  content?: string
+  footer?: string
+}
+
+const { id, className, title, content, footer } = Astro.props
+---
+
+<div class:list={['modal-wrapper', className]} id={id}>
+  <div class:list={['modal']}>
+    <slot name="closeButton" />
+    <div class="modal__header">
+      <slot name="header">{title}</slot>
+    </div>
+    <div class="modal__body">
+      <slot name="content">{content}</slot>
+    </div>
+    <div class="modal__footer">
+      <slot name="footer">{footer}</slot>
+    </div>
+  </div>
+</div>

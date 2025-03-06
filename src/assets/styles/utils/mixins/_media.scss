@@ -1,0 +1,107 @@
+@use "../variables";
+
+/*** Media mixins ***/
+// Min
+@mixin min-375 {
+  @media (min-width: variables.$screen-375) {
+    @content;
+  }
+}
+
+@mixin min-414 {
+  @media (min-width: variables.$screen-414) {
+    @content;
+  }
+}
+
+@mixin min-576 {
+  @media (min-width: variables.$screen-576) {
+    @content;
+  }
+}
+
+@mixin min-768 {
+  @media (min-width: variables.$screen-768) {
+    @content;
+  }
+}
+
+@mixin min-1024 {
+  @media (min-width: variables.$screen-1024) {
+    @content;
+  }
+}
+
+@mixin min-1440 {
+  @media (min-width: variables.$screen-1440) {
+    @content;
+  }
+}
+
+@mixin min-1536 {
+  @media (min-width: variables.$screen-1536) {
+    @content;
+  }
+}
+
+@mixin min-1920 {
+  @media (min-width: variables.$screen-1920) {
+    @content;
+  }
+}
+
+// Max
+@mixin max-414 {
+  @media screen and (max-width: (variables.$screen-414 - 1px)) {
+    @content;
+  }
+}
+
+@mixin max-576 {
+  @media screen and (max-width: (variables.$screen-576 - 1px)) {
+    @content;
+  }
+}
+
+@mixin max-768 {
+  @media screen and (max-width: (variables.$screen-768 - 1px)) {
+    @content;
+  }
+}
+
+@mixin max-1024 {
+  @media screen and (max-width: (variables.$screen-1024 - 1px)) {
+    @content;
+  }
+}
+
+@mixin max-1536 {
+  @media screen and (max-width: (variables.$screen-1536 - 1px)) {
+    @content;
+  }
+}
+
+@mixin max-1920 {
+  @media screen and (max-width: (variables.$screen-1920 - 1px)) {
+    @content;
+  }
+}
+
+// Mix
+@mixin min414-max1024 {
+  @media screen and (min-width: variables.$screen-414) and (max-width: (variables.$screen-1024 - 1px)) {
+    @content;
+  }
+}
+
+@mixin min768-max1024 {
+  @media screen and (min-width: variables.$screen-768) and (max-width: (variables.$screen-1024 - 1px)) {
+    @content;
+  }
+}
+
+@mixin min1024-max1536 {
+  @media screen and (min-width: variables.$screen-1024) and (max-width: (variables.$screen-1536 - 1px)) {
+    @content;
+  }
+}

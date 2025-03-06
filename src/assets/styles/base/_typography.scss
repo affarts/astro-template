@@ -1,0 +1,33 @@
+@use "../utils/mixins" as *;
+@use "../utils/variables" as *;
+@use "../utils/functions";
+
+h1 {
+  @include seo-heading-1;
+}
+
+h2 {
+  @include seo-heading-2;
+
+  .tag {
+    vertical-align: middle;
+  }
+}
+
+h3 {
+  @include seo-heading-3;
+}
+
+@media screen and (min-width: $screen-1024) {
+  h1 {
+    @include seo-heading-1-dp;
+  }
+
+  h2 {
+    @include seo-heading-2-dp;
+  }
+
+  h3 {
+    @include seo-heading-3-dp;
+  }
+}

@@ -1,0 +1,137 @@
+/* stylelint-disable declaration-no-important */
+@use "../../../assets/styles/utils/variables";
+@use "../../../assets/styles/utils/mixins";
+@use "../../../assets/styles/utils/functions";
+
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  padding: functions.pxToRem(16px);
+  z-index: 9999;
+  background-color: transparent;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 500ms ease;
+
+  &.is-visible {
+    opacity: 1;
+    background: variables.$color-black;
+    pointer-events: all;
+
+    .modal {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  @include mixins.min-1024 {
+    justify-content: center;
+    align-items: center;
+
+    &--toc {
+      position: relative;
+      pointer-events: all;
+      z-index: 1;
+      padding: 0;
+      height: auto;
+      opacity: 1;
+    }
+  }
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding:
+    variables.$inner-block-spacing-l functions.pxToRem(16px)
+    functions.pxToRem(16px) functions.pxToRem(16px);
+  border-radius: variables.$big-blocks-corner;
+  background: variables.$color-white;
+  transform: translateY(100%);
+  transition: all 600ms ease;
+
+  & > button {
+    position: absolute;
+    right: functions.pxToRem(16px);
+    top: functions.pxToRem(16px);
+  }
+
+  &__header {
+    display: block;
+    text-align: center;
+    max-width: 70%;
+    margin: 0 auto functions.pxToRem(16px);
+  }
+
+  &__body {
+    display: block;
+    margin: 0 auto;
+  }
+
+  &__footer {
+    margin-top: variables.$inner-block-spacing-m;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .simplebar-scrollbar::before {
+    top: functions.pxToRem(16px) !important;
+    bottom: functions.pxToRem(16px) !important;
+    right: 4px !important;
+  }
+
+  @include mixins.max-1024 {
+    width: 100%;
+
+    &--toc {
+      position: fixed !important;
+      width: 100%;
+      height: auto;
+      max-height: 70vh;
+      padding: functions.pxToRem(24px) functions.pxToRem(16px);
+      bottom: 0;
+      left: 0;
+      background-color: variables.$color-white;
+      border-radius: functions.pxToRem(12px) functions.pxToRem(12px) 0 0;
+      overflow: hidden auto;
+      visibility: hidden;
+      opacity: 0;
+      z-index: 99;
+      transform: translateY(100%);
+    }
+  }
+
+  @include mixins.min-1024 {
+    padding:
+      variables.$inner-block-spacing-l functions.pxToRem(24px)
+      functions.pxToRem(24px) functions.pxToRem(24px);
+    max-width: functions.pxToRem(688px);
+    width: 100%;
+
+    & > button {
+      right: functions.pxToRem(24px);
+      top: functions.pxToRem(24px);
+    }
+
+    &__header {
+      margin: 0 auto functions.pxToRem(24px);
+    }
+
+    &--toc {
+      all: unset;
+      width: 100%;
+      height: auto;
+      max-height: 80vh;
+    }
+  }
+}

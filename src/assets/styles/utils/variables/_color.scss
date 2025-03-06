@@ -1,0 +1,16 @@
+/*** Colors ***/
+@use "sass:color";
+
+@function hexToRGB($hex) {
+  @return "#{color.channel($hex, 'red')}, #{color.channel($hex, 'green')}, #{color.channel($hex, 'blue')}";
+}
+
+:root {
+  --color-white: #ffffff;
+  --color-black: #1b1e2e;
+}
+// Main colors
+$color-black: var(--color-black);
+$color-white: var(--color-white);
+
+// Additional colors

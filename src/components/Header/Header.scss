@@ -1,0 +1,22 @@
+/* stylelint-disable declaration-no-important */
+@use "../../assets/styles/utils/variables";
+@use "../../assets/styles/utils/mixins";
+@use "../../assets/styles/utils/functions";
+
+.header {
+  display: flex;
+  padding: 24px;
+
+  &__logo {
+    flex-shrink: 0;
+    width: 100px;
+    height: 30px;
+
+    img {
+      display: block;
+      width: auto;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}

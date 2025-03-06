@@ -1,0 +1,21 @@
+---
+// Components
+import logo from '@images/logo.svg'
+
+// Astro
+import { Image } from 'astro:assets'
+---
+
+<header class="header">
+  <div class="container">
+    <div class="header__content">
+      <a href="/" class="header__logo">
+        <Image src={logo} alt="logo" loading="eager" />
+      </a>
+      <div class="header__menu-wrapper" data-lenis-prevent>
+        <nav class="header__menu"></nav>
+      </div>
+      <button class="header__burger"></button>
+    </div>
+  </div>
+</header>

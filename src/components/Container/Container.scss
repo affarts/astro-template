@@ -1,0 +1,26 @@
+@use "../../assets/styles/utils/variables" as *;
+@use "../../assets/styles/utils/mixins" as *;
+@use "../../assets/styles/utils/functions";
+
+.container {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 var(--pd-lg);
+
+  @include min-1024 {
+    padding: 0 var(--pd-md);
+  }
+
+  &--no-p {
+    padding: 0;
+  }
+
+  &--big {
+    padding: 0 220px;
+
+    @include min-1024 {
+      padding: 0 140px;
+    }
+  }
+}

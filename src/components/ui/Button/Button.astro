@@ -1,0 +1,28 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types'
+
+type Props<Tag extends HTMLTag> = Polymorphic<
+  { as: Tag } & {
+    form?: string // Which form should submit
+    type?: string
+    text?: string
+    className?: string
+    main?: boolean // If you are using custom button set false
+  }
+>
+
+const {
+  as: Tag = 'button',
+  main = true,
+  className,
+  text,
+  ...props
+} = Astro.props
+---
+
+<Tag class:list={[{ btn: main }, className]} {...props}>
+  <slot name="icon_left" />
+  {text}
+  <slot name="content" />
+  <slot name="icon_right" />
+</Tag>

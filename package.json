@@ -1,0 +1,91 @@
+{
+  "name": "astro-template",
+  "type": "module",
+  "version": "0.0.1",
+  "browserslist": [
+    "cover 99.5%"
+  ],
+  "astro": {
+    "bundlerOptions": {
+      "css": {
+        "minify": true,
+        "extract": {
+          "filename": "[name].css"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev --host",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "vitest",
+    "check": "astro check",
+    "check:ts": "tsc --noEmit",
+    "prepare": "husky",
+    "lint:prettier": "prettier -w **/*.{js,jsx,ts,tsx,md,mdx,astro} --config .prettierrc.cjs",
+    "lint:eslint": "eslint src/**/*.{js,ts,jsx,tsx,astro} --fix",
+    "lint:stylelint": "stylelint **/*.scss",
+    "lint:stylelint:fix": "stylelint **/*.scss --fix",
+    "lint": "npm run lint:prettier & npm run lint:eslint & npm run lint:stylelint"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "^1.6.12",
+    "astro": "^4.16.13",
+    "astro-icon": "^1.1.0",
+    "gsap": "^3.12.5",
+    "intl-tel-input": "^24.6.0",
+    "lenis": "^1.1.14",
+    "lozad": "^1.16.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "simplebar": "^6.2.7",
+    "slim-select": "^2.9.2",
+    "slugify": "^1.6.6",
+    "split-type": "^0.3.4",
+    "splitting": "^1.0.6",
+    "swiper": "^11.0.6",
+    "tweakpane": "^4.0.4",
+    "vanilla-cookieconsent": "^3.0.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/tailwind": "^5.1.2",
+    "@astrojs/ts-plugin": "^1.6.1",
+    "@stylistic/stylelint-plugin": "^3.1.2",
+    "@tweakpane/core": "^2.0.4",
+    "@types/jsdom": "^21.1.7",
+    "@types/lozad": "^1.16.4",
+    "@types/swiper": "^6.0.0",
+    "@typescript-eslint/parser": "^6.7.2",
+    "autoprefixer": "^10.4.20",
+    "chalk": "^5.3.0",
+    "cssnano": "^7.0.6",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^10.0.2",
+    "eslint-plugin-astro": "^0.29.0",
+    "glob": "^10.3.12",
+    "husky": "^9.0.11",
+    "inquirer": "^9.2.17",
+    "inquirer-file-tree-selection-prompt": "^2.0.5",
+    "jsdom": "^25.0.1",
+    "postcss": "^8.4.47",
+    "postcss-combine-duplicated-selectors": "^10.0.3",
+    "postcss-combine-media-query": "^1.0.1",
+    "postcss-reporter": "^7.1.0",
+    "postcss-scss": "^4.0.9",
+    "postcss-sort-media-queries": "^5.2.0",
+    "postcss-url": "^10.1.3",
+    "prettier": "^3.1.1",
+    "prettier-plugin-astro": "^0.12.3",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "sass": "^1.81.0",
+    "stylelint-scss": "^6.0.0",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.3.3",
+    "vite-plugin-sass-glob-import": "^3.0.2",
+    "vitest": "^2.1.1"
+  }
+}

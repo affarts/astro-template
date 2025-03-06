@@ -1,0 +1,17 @@
+@use "../variables";
+
+@function size-html($viewport, $factor: 1) {
+  // viewport - Viewport variable
+  // factor - Scale factor
+  @return calc(variables.$default-font-size / $viewport) * 100vw * $factor; // 16 / 768 * 100
+}
+
+// Px to rem
+@function pxToRem($px) {
+  @return calc($px / variables.$default-font-size) * 1rem;
+}
+
+// Как это работает:
+// $default-font-size / $viewport: Эта часть вычисляет долю, которая представляет собой отношение размера шрифта (например, 16px) к ширине окна просмотра. Это дает размер шрифта в относительных единицах.
+// 100vw: Это 100% ширины окна просмотра (viewport width), где 1vw равен 1% ширины окна.
+// $factor: Множитель позволяет дополнительно масштабировать результат.

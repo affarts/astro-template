@@ -1,0 +1,107 @@
+/*** Global mixins ***/
+@mixin hover-focus {
+  &:focus-visible {
+    @content;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin focus {
+  &:focus-visible {
+    @content;
+  }
+}
+
+@mixin active {
+  &:active {
+    @content;
+  }
+}
+
+@mixin disabled {
+  &:disabled,
+  &[inert],
+  &.is-disabled {
+    @content;
+  }
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  white-space: nowrap;
+  border: 0;
+  clip-path: inset(100%);
+}
+
+@mixin multi-line-clamp($lines: 3) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  align-self: stretch;
+  overflow: hidden;
+}
+
+// Columns with a min-width of 64px per column
+@mixin grid-min-max-cols($min-cols, $max-cols, $cols-min-width, $grid-row-gap: 0, $grid-column-gap: 0) {
+  --min-cols: #{$min-cols};
+  --max-cols: #{$max-cols};
+  --cols-min-width: #{$cols-min-width};
+  --grid-row-gap: #{$grid-row-gap};
+  --grid-column-gap: #{$grid-column-gap};
+
+  display: grid;
+  grid-template-columns:
+    repeat(
+      auto-fill,
+      minmax(
+        min(
+          (100% / var(--min-cols) - var(--grid-column-gap) * (var(--min-cols) - 1) / var(--min-cols)),
+          max(var(--cols-min-width), (100% / var(--max-cols) - var(--grid-column-gap) * (var(--max-cols) - 1) / var(--max-cols)))
+        ),
+        1fr
+      )
+    );
+  gap: var(--grid-row-gap) var(--grid-column-gap);
+}
+
+// With exactly 64px width per column
+@mixin grid-min-max-cols-strict($min-cols, $max-cols, $cols-min-width, $grid-row-gap: 0, $grid-column-gap: 0) {
+  --min-cols: #{$min-cols};
+  --max-cols: #{$max-cols};
+  --cols-min-width: #{$cols-min-width};
+  --grid-row-gap: #{$grid-row-gap};
+  --grid-column-gap: #{$grid-column-gap};
+
+  display: grid;
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(
+        0,
+        min(
+          (100% / var(--min-cols) - var(--grid-column-gap) * (var(--min-cols) - 1) / var(--min-cols)),
+          max(var(--cols-min-width), (100% / var(--max-cols) - var(--grid-column-gap) * (var(--max-cols) - 1) / var(--max-cols)))
+        )
+      )
+    );
+  gap: $grid-row-gap $grid-column-gap;
+}
