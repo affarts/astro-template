@@ -1,0 +1,113 @@
+@use "@scss/utils/variables" as *;
+@use "@scss/utils/functions" as *;
+@use "@scss/utils/mixins" as *;
+
+@mixin simplebar-vertical-sm {
+  /* stylelint-disable-next-line declaration-no-important */
+  width: 7px !important;
+  transform: translateX(-2px);
+  transition: background-color $transition;
+}
+
+@mixin simplebar-horizontal-sm {
+  /* stylelint-disable-next-line declaration-no-important */
+  height: 2px !important;
+  transform: translateY(0);
+  transition: background-color $transition;
+  border-radius: 7px;
+
+  .simplebar-scrollbar.simplebar-visible::before {
+    /* stylelint-disable-next-line declaration-no-important */
+    height: 2px !important;
+    left: 0;
+    right: 0;
+    transform: translateY(-2px);
+  }
+
+  @include min-1024 {
+    /* stylelint-disable-next-line declaration-no-important */
+    height: 4px !important;
+
+    .simplebar-scrollbar.simplebar-visible::before {
+      /* stylelint-disable-next-line declaration-no-important */
+      height: 4px !important;
+    }
+  }
+}
+
+@mixin simplebar-vertical-lg {
+  /* stylelint-disable-next-line declaration-no-important */
+  width: 9px !important;
+  transform: translateX(-3px);
+}
+
+@mixin simplebar-horizontal-lg {
+  /* stylelint-disable-next-line declaration-no-important */
+  height: 9px !important;
+  transform: translateY(-3px);
+}
+
+.simplebar-track .simplebar-scrollbar.simplebar-visible::before {
+  background: none;
+  background-color: $color-white;
+  opacity: 0.15;
+  transition-duration: 0.1s;
+}
+
+.simplebar-track.simplebar-hover .simplebar-scrollbar::before {
+  opacity: 1;
+}
+
+.simplebar-dragging .simplebar-track .simplebar-scrollbar.simplebar-visible::before {
+  opacity: 1;
+}
+
+.simplebar-track.simplebar-vertical {
+  @include simplebar-vertical-sm;
+}
+
+.simplebar-track.simplebar-horizontal {
+  @include simplebar-horizontal-sm;
+}
+
+.bar--lg {
+  .simplebar-track.simplebar-vertical {
+    @include simplebar-vertical-lg;
+  }
+
+  .simplebar-track.simplebar-horizontal {
+    @include simplebar-horizontal-lg;
+  }
+}
+
+.bar--sm {
+  .simplebar-track.simplebar-vertical {
+    @include simplebar-vertical-sm;
+  }
+
+  .simplebar-track.simplebar-horizontal {
+    @include simplebar-horizontal-sm;
+  }
+}
+
+@include min-1024 {
+  .lg\:bar--lg {
+    .simplebar-track.simplebar-vertical {
+      @include simplebar-vertical-lg;
+    }
+
+    .simplebar-track.simplebar-horizontal {
+      @include simplebar-horizontal-lg;
+    }
+  }
+
+  .lg\:bar--sm {
+    .simplebar-track.simplebar-vertical {
+      @include simplebar-vertical-sm;
+    }
+
+    .simplebar-track.simplebar-horizontal {
+      @include simplebar-horizontal-sm;
+    }
+  }
+}

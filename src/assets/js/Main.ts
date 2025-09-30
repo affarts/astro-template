@@ -1,4 +1,4 @@
-import Core from './Core'
+import Core from './modules/Core/Core'
 
 const initApp = async () => {
   const core = Core.getInstance()

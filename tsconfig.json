@@ -5,11 +5,13 @@
     "paths": {
       "@components/*": ["src/components/*.astro"],
       "@layouts/*": ["src/layouts/*.astro"],
-      "@ui/*": ["src/ui/*.astro"],
+      "@ui/*": ["src/components/ui/*.astro"],
       "@views/*": ["src/views/*.astro"],
       "@images/*": ["src/assets/images/*"],
+      "@icons/*": ["src/assets/icons/*"],
       "@data/*": ["src/core/data/*.ts"],
-      "@ctypes/*": ["src/core/types/*.ts"]
+      "@ctypes/*": ["src/core/types/*.ts"],
+      "@scripts/*": ["src/assets/js/*.ts"]
     },
     "plugins": [
       {

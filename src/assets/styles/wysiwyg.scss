@@ -1,7 +1,7 @@
 /* stylelint-disable declaration-no-important */
-@use "./utils/variables";
-@use "./utils/mixins";
-@use "./utils/functions";
+@use "@scss/utils/functions" as *;
+@use "@scss/utils/variables" as *;
+@use "@scss/utils/mixins" as *;
 
 .wysiwyg {
   & > *:first-child {

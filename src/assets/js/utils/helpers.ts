@@ -1,7 +1,14 @@
-export const sanitizeHyphens = (el) => {
-  const wrapHyphen = (text) =>
+import Core from '@scripts/modules/Core/Core'
+
+/**
+ * Тип для целевого элемента
+ */
+export type Target = 'nextEl' | 'prevEl' | 'parent' | string | HTMLElement
+
+export const sanitizeHyphens = (el: HTMLElement) => {
+  const wrapHyphen = (text: string) =>
     text.replace(/-/g, '<span class="hyphen">-</span>')
-  const processNode = (node) => {
+  const processNode = (node: HTMLElement) => {
     if (node.nodeType === Node.TEXT_NODE) {
       const sanitized = wrapHyphen(node.textContent)
       const span = document.createElement('span')
@@ -145,4 +152,139 @@ export function copyToClipboard(url: string): void {
         console.error('Ошибка при копировании: ', err)
       })
   }
+}
+
+export function resolveTarget(
+  el: HTMLElement,
+  target: Target
+): HTMLElement | null {
+  let targetEl = null
+  if (typeof target === 'string') {
+    // Проверка на специальные указания: родитель, следующий или предыдущий элемент
+    if (
+      target.startsWith('parent') ||
+      target === 'nextEl' ||
+      target === 'prevEl'
+    ) {
+      targetEl = resolveTargetFromString(el, target) // Находим целевой элемент по строке
+    } else {
+      targetEl = document.querySelector(target) as HTMLElement | null // Ищем элемент по селектору
+    }
+  } else if (target instanceof HTMLElement) {
+    targetEl = target // Прямо возвращаем переданный элемент
+  }
+  // eslint-disable-next-line no-console
+  if (!target) console.warn('BuildToggle: Target element not found')
+  return targetEl
+}
+
+export function resolveTargetFromString(
+  el: HTMLElement,
+  target: string
+): HTMLElement | null {
+  let currentElement: HTMLElement | null = el // Начинаем с текущего элемента
+  const actions = target.split('.') // Разбиваем строку на действия
+
+  for (const action of actions) {
+    if (action === 'nextEl') {
+      currentElement = currentElement?.nextElementSibling as HTMLElement // Ищем следующий элемент
+    } else if (action === 'prevEl') {
+      currentElement = currentElement?.previousElementSibling as HTMLElement // Ищем предыдущий элемент
+    } else if (action === 'parent') {
+      currentElement = currentElement?.parentElement as HTMLElement // Ищем родительский элемент
+    }
+    if (!currentElement) {
+      break // Если элемент не найден, прерываем цикл
+    }
+  }
+
+  return currentElement // Возвращаем найденный элемент
+}
+
+/**
+ * Инициализирует Simplebar для элемента.
+ * @param {HTMLElement} el - Элемент для инициализации.
+ * @param {any} options - Опции для инициализации Simplebar.
+ */
+export async function initSimplebar(el: HTMLElement, options: any) {
+  if (el.classList.contains('is-initialized')) {
+    return
+  }
+
+  const Simplebar = Core.getInstance().moduleManager.getModule('simplebar')
+  new Simplebar(el, options)
+  el.classList.add('is-initialized')
+
+  const simplebarWrapper = el.querySelector('.simplebar-content-wrapper')
+  if (simplebarWrapper) {
+    simplebarWrapper.setAttribute('data-scroll-lock-scrollable', '')
+  }
+}
+
+export function resetSimplebar(element: HTMLElement): void {
+  if (element?.hasAttribute('data-simplebar')) {
+    const Simplebar = Core.getInstance().moduleManager.getModule('simplebar')
+    const instance = Simplebar.instances.get(element)
+
+    if (!instance) {
+      return
+    }
+
+    const content = instance.getContentElement()
+    content.querySelectorAll(':scope > *').forEach((innerEl: HTMLElement) => {
+      element.append(innerEl)
+    })
+
+    instance.unMount()
+
+    element
+      .querySelectorAll('[class*="simplebar"]')
+      .forEach((node: HTMLElement) => {
+        node.remove()
+      })
+
+    element.classList.remove(
+      'is-initialized',
+      'simplebar-scrollable-y',
+      'simplebar'
+    )
+    element.removeAttribute('data-simplebar')
+  }
+}
+
+export function initAdaptiveSimplebar({ el, options, mediaQuery }): void {
+  const mediaQueryList = window.matchMedia(mediaQuery)
+  const checkMediaQuery = () => {
+    if (mediaQueryList.matches) {
+      initSimplebar(el, options)
+    } else {
+      resetSimplebar(el)
+    }
+  }
+
+  checkMediaQuery()
+  mediaQueryList.addEventListener('change', checkMediaQuery)
+}
+
+export function dataURLtoBlob(dataURL: string): string {
+  // Конвертируем base64/URLEncoded data в массив байтов
+  const byteString =
+    dataURL.split(',')[0].indexOf('base64') >= 0
+      ? atob(dataURL.split(',')[1])
+      : decodeURI(dataURL.split(',')[1])
+
+  // Определяем MIME-тип
+  const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0]
+
+  // Создаем массив байтов
+  const ia = new Uint8Array(byteString.length)
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i)
+  }
+
+  // Создаем Blob из массива байтов
+  const blob = new Blob([ia], { type: mimeString })
+
+  // Создаем URL для Blob
+  return URL.createObjectURL(blob)
 }
