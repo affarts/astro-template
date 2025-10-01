@@ -1,6 +1,5 @@
 import { lockFocus, unlockFocus } from '@scripts/utils/focus-lock'
-import pkg from 'scroll-lock'
-const { disablePageScroll, enablePageScroll, removeScrollableTarget } = pkg
+import { disablePageScroll, enablePageScroll } from '@fluejs/noscroll'
 import { mediaMobile } from '@scripts/utils/const'
 import { initSimplebar, resetSimplebar } from '@scripts/utils/helpers'
 
@@ -304,11 +303,12 @@ export class Modals {
     }
 
     modal.classList.add('is-active')
-    disablePageScroll(
-      this.mediaQuery.matches
-        ? (modal.querySelector('.modal__content') as HTMLElement)
-        : null
-    )
+    disablePageScroll()
+    // disablePageScroll(
+    //   this.mediaQuery.matches
+    //     ? (modal.querySelector('.modal__content') as HTMLElement)
+    //     : null
+    // )
 
     config.openCallback?.(event)
 
@@ -451,7 +451,7 @@ export class Modals {
    * @param {any} Simplebar - Класс Simplebar.
    */
   private initSimplebar = (el: HTMLElement): void => {
-    removeScrollableTarget(el)
+    // removeScrollableTarget(el)
 
     const options = {
       autoHide: false,

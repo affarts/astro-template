@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import { Modals } from '@scripts/modules/Modals/Modals'
 import { debounce } from '@scripts/utils/global'
-import pkg from 'scroll-lock'
-const { getScrollState } = pkg
+// import pkg from '@fluejs/noscroll'
+// const { getScrollState } = pkg
 
 declare global {
   export interface Window {
@@ -336,7 +336,7 @@ class ScrollController {
 
   private setDirection(direction: number): void {
     if (
-      getScrollState() &&
+      // getScrollState() &&
       direction !== 0 &&
       direction !== (this.scrollDirection === 'down' ? 1 : -1)
     ) {
