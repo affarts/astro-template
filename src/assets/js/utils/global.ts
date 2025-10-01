@@ -1,4 +1,12 @@
-export function debounce<T extends(..._args: any[]) => void>(
+/**
+ * Дебаунс функция
+ * @param {Function} func - Функция, которую нужно дебаунсить
+ * @param {number} [wait=50] - Время ожидания перед вызовом функции
+ * @param {boolean} [immediate=false] - Если true, функция будет вызвана немедленно
+ * @return {Function} Дебаунс функция
+ */
+// eslint-disable-next-line space-before-function-paren
+export function debounce<T extends (..._args: any[]) => void>(
   func: T,
   wait = 50,
   immediate = false
@@ -20,21 +28,12 @@ export function debounce<T extends(..._args: any[]) => void>(
     }
   }
 }
-export function generateID(): string {
-  return Math.random().toString(36).substring(2, 10)
-}
-export function chunkArray(array, size) {
-  const result = []
-  for (let i = 0; i < array.length; i += size) {
-    result.push(array.slice(i, i + size))
-  }
-  return result
-}
 
-export function isEqual(a: any, b: any) {
-  return JSON.stringify(a) === JSON.stringify(b)
-}
-
+/**
+ * Конвертирует строку из camelCase в kebab-case.
+ * @param {string} str - Входная строка в camelCase.
+ * @return {string} - Выходная строка в kebab-case.
+ */
 export function kebabCase(str: string) {
   const result = str.replace(
     /[A-Z\u00C0-\u00D6\u00D8-\u00DE]/g,

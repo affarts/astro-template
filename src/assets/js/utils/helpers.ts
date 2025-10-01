@@ -5,155 +5,12 @@ import Core from '@scripts/modules/Core/Core'
  */
 export type Target = 'nextEl' | 'prevEl' | 'parent' | string | HTMLElement
 
-export const sanitizeHyphens = (el: HTMLElement) => {
-  const wrapHyphen = (text: string) =>
-    text.replace(/-/g, '<span class="hyphen">-</span>')
-  const processNode = (node: HTMLElement) => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      const sanitized = wrapHyphen(node.textContent)
-      const span = document.createElement('span')
-      span.innerHTML = sanitized
-      node.replaceWith(...span.childNodes)
-    } else if (node.nodeType === Node.ELEMENT_NODE) {
-      Array.from(node.childNodes).forEach(processNode)
-    }
-  }
-
-  processNode(el)
-  return el
-}
 /**
- * Оборачивает элемент в указанный контейнер.
- *
- * @param {HTMLElement} el - Элемент, который нужно обернуть.
- * @param {HTMLElement} wrapper - Контейнер, в который будет обернут элемент.
+ * Функция для разрешения целевого элемента на основе переданного значения.
+ * @param {HTMLElement} el - Текущий элемент, от которого начинается поиск.
+ * @param {Target} target - Целевой элемент, который может быть строкой (селектором или специальной командой) или HTMLElement.
+ * @return {HTMLElement | null} - Найденный целевой элемент или null, если не найден.
  */
-export const wrapElement = (el: HTMLElement, wrapper: HTMLElement): void => {
-  el.parentNode?.insertBefore(wrapper, el)
-  wrapper.appendChild(el)
-}
-
-/**
- * Преобразует строку, делая первую букву каждого слова заглавной.
- *
- * @param {string} str - Строка для преобразования.
- * @param {boolean} [lower=false] - Флаг, указывающий, нужно ли преобразовать строку в нижний регистр перед форматированием.
- * @return {string} - Преобразованная строка с заглавными первыми буквами слов.
- */
-export const capitalizeText = (str: string, lower: boolean = false): string =>
-  (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, (match) =>
-    match.toUpperCase()
-  )
-
-/**
- * Прокручивает контейнер по горизонтали к указанному элементу.
- *
- * @param {HTMLElement} container - Контейнер, в котором будет выполняться прокрутка.
- * @param {HTMLElement} target - Целевой элемент, к которому нужно прокрутить.
- */
-export const scrollHorizontalToElement = (
-  container: HTMLElement,
-  target: HTMLElement
-): void => {
-  if (container && target) {
-    // Получаем смещение целевого элемента относительно контейнера
-    const targetRect = target.getBoundingClientRect()
-    const containerRect = container.getBoundingClientRect()
-
-    // Вычисляем позицию прокрутки
-    const scrollTo = targetRect.left - containerRect.left + container.scrollLeft
-
-    // Прокручиваем контейнер к целевому элементу
-    container.scrollTo({
-      left: scrollTo,
-      behavior: 'smooth' // или 'auto' для мгновенной прокрутки
-    })
-  } else {
-    // eslint-disable-next-line no-console
-    console.error('Container or target element not found')
-  }
-}
-
-/**
- * Дополняет число нулями слева до указанного количества символов.
- *
- * @param {number} num - Число для дополнения.
- * @param {number} places - Общее количество символов в результирующей строке.
- * @return {string} - Строка, представляющая число с добавленными нулями слева.
- */
-export const zeroPad = (num: number, places: number): string =>
-  String(num).padStart(places, '0')
-
-/**
- * Форматирует число с разделителями каждые три цифры.
- *
- * @param {number} num - Число для форматирования.
- * @param {string} separator - Разделитель, который будет использоваться (например, пробел, запятая или точка).
- * @return {string} - Форматированное число с разделителями.
- */
-export const formatNumber = (num: number, separator: string): string => {
-  const parts = num.toString().split('') // Преобразуем число в массив символов
-  let formattedNumber = ''
-
-  // Формируем строку с разделителями каждые три цифры
-  for (let i = parts.length - 1, count = 1; i >= 0; i--, count++) {
-    formattedNumber = parts[i] + formattedNumber
-    if (count % 3 === 0 && i !== 0) {
-      formattedNumber = separator + formattedNumber
-    }
-  }
-
-  return formattedNumber
-}
-
-/**
- * Получает CSRF-токен из cookie.
- *
- * @return {string | null} - Значение CSRF-токена, если он найден, иначе null.
- */
-export function getCSRFToken(): string | null {
-  const name = 'csrftoken'
-  const cookies = document.cookie.split(';')
-  for (const cookie of cookies) {
-    const trimmedCookie = cookie.trim()
-    if (trimmedCookie.startsWith(name + '=')) {
-      return trimmedCookie.substring(name.length + 1)
-    }
-  }
-  return null
-}
-
-export function formatTime(seconds: number): string {
-  const mins = Math.floor(seconds / 60)
-  const secs = Math.floor(seconds % 60)
-  return `${mins}:${secs < 10 ? '0' : ''}${secs}`
-}
-
-/**
- * Функция для копирования текста в буфер обмена
- *
- * @param {string} url - Ссылка для копирования.
- */
-export function copyToClipboard(url: string): void {
-  if (url) {
-    navigator.clipboard
-      .writeText(url)
-      .then(() => {
-        const statusElement = document.getElementById('copyStatus')
-        if (statusElement) {
-          statusElement.classList.add('show')
-          setTimeout(() => {
-            statusElement.classList.remove('show')
-          }, 2000)
-        }
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.error('Ошибка при копировании: ', err)
-      })
-  }
-}
-
 export function resolveTarget(
   el: HTMLElement,
   target: Target
@@ -178,6 +35,17 @@ export function resolveTarget(
   return targetEl
 }
 
+/**
+ * Разрешает целевой элемент на основе строки с указаниями.
+ * Поддерживаются следующие указания:
+ * - 'nextEl': следующий соседний элемент
+ * - 'prevEl': предыдущий соседний элемент
+ * - 'parent': родительский элемент
+ * Можно комбинировать указания через точку, например: 'parent.nextEl'
+ * @param {HTMLElement} el - Текущий элемент, от которого начинается поиск.
+ * @param {string} target - Строка с указаниями для поиска целевого элемента.
+ * @return {HTMLElement | null} - Найденный целевой элемент или null, если не найден.
+ */
 export function resolveTargetFromString(
   el: HTMLElement,
   target: string
@@ -203,10 +71,12 @@ export function resolveTargetFromString(
 
 /**
  * Инициализирует Simplebar для элемента.
+ * Функция использует менеджер модулей для получения класса Simplebar,
+ * поэтому Simplebar должен быть загружен в менеджере модулей до первого вызова initSimplebar.
  * @param {HTMLElement} el - Элемент для инициализации.
  * @param {any} options - Опции для инициализации Simplebar.
  */
-export async function initSimplebar(el: HTMLElement, options: any) {
+export function initSimplebar(el: HTMLElement, options: any) {
   if (el.classList.contains('is-initialized')) {
     return
   }
@@ -221,7 +91,13 @@ export async function initSimplebar(el: HTMLElement, options: any) {
   }
 }
 
-export function resetSimplebar(element: HTMLElement): void {
+/**
+ * Сбрасывает и удаляет инициализацию Simplebar для элемента.
+ * Функция использует менеджер модулей для получения класса Simplebar,
+ * поэтому Simplebar должен быть загружен в менеджере модулей до первого вызова resetSimplebar.
+ * @param {HTMLElement} element - Элемент для сброса Simplebar.
+ */
+export function resetSimplebar(element: HTMLElement) {
   if (element?.hasAttribute('data-simplebar')) {
     const Simplebar = Core.getInstance().moduleManager.getModule('simplebar')
     const instance = Simplebar.instances.get(element)
@@ -252,6 +128,15 @@ export function resetSimplebar(element: HTMLElement): void {
   }
 }
 
+/**
+ * Инициализирует и сбрасывает Simplebar для элемента на основе медиа-запроса.
+ * Функция использует менеджер модулей для получения класса Simplebar,
+ * поэтому Simplebar должен быть загружен в менеджере модулей до первого вызова initAdaptiveSimplebar.
+ * @param {Object} params - Параметры функции.
+ * @param {HTMLElement} params.el - Элемент для инициализации.
+ * @param {any} params.options - Опции для инициализации Simplebar.
+ * @param {string} params.mediaQuery - Медиа-запрос для активации Simplebar.
+ */
 export function initAdaptiveSimplebar({ el, options, mediaQuery }): void {
   const mediaQueryList = window.matchMedia(mediaQuery)
   const checkMediaQuery = () => {
@@ -264,27 +149,4 @@ export function initAdaptiveSimplebar({ el, options, mediaQuery }): void {
 
   checkMediaQuery()
   mediaQueryList.addEventListener('change', checkMediaQuery)
-}
-
-export function dataURLtoBlob(dataURL: string): string {
-  // Конвертируем base64/URLEncoded data в массив байтов
-  const byteString =
-    dataURL.split(',')[0].indexOf('base64') >= 0
-      ? atob(dataURL.split(',')[1])
-      : decodeURI(dataURL.split(',')[1])
-
-  // Определяем MIME-тип
-  const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0]
-
-  // Создаем массив байтов
-  const ia = new Uint8Array(byteString.length)
-  for (let i = 0; i < byteString.length; i++) {
-    ia[i] = byteString.charCodeAt(i)
-  }
-
-  // Создаем Blob из массива байтов
-  const blob = new Blob([ia], { type: mimeString })
-
-  // Создаем URL для Blob
-  return URL.createObjectURL(blob)
 }

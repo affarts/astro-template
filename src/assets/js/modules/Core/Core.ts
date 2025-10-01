@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import { copyToClipboard } from '@scripts/utils/helpers'
 import { Modals } from '@scripts/modules/Modals/Modals'
 import { debounce } from '@scripts/utils/global'
 import pkg from 'scroll-lock'
@@ -8,7 +7,6 @@ const { getScrollState } = pkg
 declare global {
   export interface Window {
     ResizeObserver: any
-    copyToClipboard: (_url: string) => void
   }
 }
 
@@ -511,7 +509,6 @@ class Core {
     await this.scrollController.initialize()
     await this.moduleManager.loadModule('simplebar')
     this.initUserInteractionWatcher()
-    window.copyToClipboard = copyToClipboard
   }
 
   private initUserInteractionWatcher(): void {
