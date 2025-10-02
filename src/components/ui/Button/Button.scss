@@ -1,3 +1,16 @@
-.button {
+@use "@scss/utils/variables" as *;
+@use "@scss/utils/mixins" as *;
+@use "@scss/utils/functions" as *;
+
+.btn {
   display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid $color-black;
+  padding: pxToRem(12px) pxToRem(32px);
+  color: $color-black;
+  border-radius: pxToRem(8px);
+  user-select: none;
+  cursor: pointer;
 }

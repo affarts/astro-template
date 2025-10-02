@@ -1,0 +1,27 @@
+---
+import { Icon } from 'astro-icon/components'
+
+export interface Props {
+  code?: string
+}
+
+const { code } = Astro.props
+
+const isProd = import.meta.env.PROD
+---
+
+<div class="ui-kit-item">
+  <slot />
+  {
+    code && !isProd && (
+      <>
+        <pre>
+          <code>{code}</code>
+        </pre>
+        <button type="button" class="ui-kit-copy-button" data-copy-code-btn>
+          <Icon name="ui-kit-copy" />
+        </button>
+      </>
+    )
+  }
+</div>

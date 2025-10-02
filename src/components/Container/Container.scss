@@ -4,23 +4,15 @@
 
 .container {
   width: 100%;
-  max-width: 1920px;
+  max-width: 1536px;
   margin: 0 auto;
-  padding: 0 var(--pd-lg);
+  padding: 0 pxToRem(16px);
 
   @include min-1024 {
-    padding: 0 var(--pd-md);
+    padding: 0 pxToRem(48px);
   }
 
   &--no-p {
     padding: 0;
-  }
-
-  &--big {
-    padding: 0 220px;
-
-    @include min-1024 {
-      padding: 0 140px;
-    }
   }
 }

@@ -1,0 +1,263 @@
+---
+import Layout from '@layouts/root/root'
+import Container from '@components/Container/Container'
+---
+
+<Layout title="UI-Kit">
+  <header class="ui-header">
+    <Container>
+      <div class="ui-header__logo">
+        <img src="/src/assets/images/logo.svg" alt="logo" />
+      </div>
+    </Container>
+  </header>
+  <main>
+    <slot />
+    <div class="ui-nav" data-ui-nav>
+      <ul></ul>
+      <button class="ui-nav__toggle" data-ui-nav-toggle>+</button>
+    </div>
+  </main>
+</Layout>
+
+<style is:inline>
+  .ui {
+    padding-top: 10px;
+    padding-bottom: 30px;
+  }
+  .ui__title {
+    margin: 0;
+    margin-bottom: 20px;
+    position: relative;
+    font-size: 28px;
+    line-height: 1.2;
+    text-decoration: underline;
+  }
+  .ui__text {
+    margin: 0;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .ui [data-ui-section] {
+    display: grid;
+    justify-content: start;
+    gap: 15px;
+    padding: 30px 30px 35px;
+    border-radius: 16px;
+    background-color: #f8f5fc;
+  }
+  .ui [data-ui-section]:not(:last-child) {
+    margin-bottom: 45px;
+  }
+  .ui__mod-wrap {
+    margin: 0 -15px;
+    padding: 15px;
+    display: grid;
+    gap: 15px;
+    border-radius: 8px;
+  }
+  .ui__mod-wrap--dark {
+    background-color: #2e2f37;
+    color: #ffffff;
+  }
+  .ui-title {
+    margin-bottom: 30px;
+    font-size: 45px;
+    line-height: 1.2;
+    color: #58485e;
+  }
+  .ui-nav {
+    position: fixed;
+    z-index: 100;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .ui-nav.is-open ul {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .ui-nav__toggle {
+    position: relative;
+    bottom: 10px;
+    right: 10px;
+    z-index: 2;
+    width: 34px;
+    height: 34px;
+    background-color: #f8f5fc;
+    border: 2px solid #58485e;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+    color: #58485e;
+    opacity: 0.4;
+    transition:
+      opacity 0.3s ease,
+      border-color 0.3s ease;
+  }
+  .ui-nav__toggle:hover {
+    opacity: 1;
+    border-color: #b8b1b9;
+  }
+  .ui-nav ul {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% - 34px);
+    list-style: none;
+    max-height: 500px;
+    padding: 15px;
+    margin: 0;
+    background-color: #f8f5fc;
+    border: 2px solid #b8b1b9;
+    border-radius: 18px;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    overflow-y: auto;
+  }
+  .ui-nav ul::-webkit-scrollbar {
+    display: none;
+  }
+  .ui-nav ul::after {
+    content: 'Навигация';
+    margin-bottom: -37px;
+    margin-top: 30px;
+    display: block;
+    font-size: 14px;
+    color: #58485e;
+    opacity: 0.6;
+  }
+  .ui-nav ul li:not(:last-child) {
+    margin-bottom: 13px;
+  }
+  .ui-nav ul a {
+    color: #58485e;
+    font-size: 18px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  .ui-nav ul a:hover {
+    opacity: 0.7;
+  }
+  .ui-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+  }
+  .ui-header__logo svg {
+    width: 192px;
+  }
+  .ui-footer {
+    padding: 12px 0 20px;
+    width: 100%;
+  }
+  .ui-footer__text {
+    text-align: right;
+    font-size: 16px;
+    line-height: 19px;
+    opacity: 0.6;
+  }
+  .ui-background-gray {
+    background-color: #808080;
+  }
+  .ui-kit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .ui-kit-item > pre {
+    display: none;
+  }
+
+  .ui-kit-copy-button {
+    order: -1;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: transparent;
+  }
+
+  .ui-kit-copy-button svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script is:inline>
+  const getAnchorId = (index) => `section-${index}`
+  const sections = [...document.querySelectorAll('[data-ui-section]')]
+  const nav = document.querySelector('[data-ui-nav]')
+  const toggle = document.querySelector('[data-ui-nav-toggle]')
+  let list = null
+
+  const createAnchorsId = () => {
+    sections.forEach((section, index) => {
+      section.id = getAnchorId(index)
+    })
+  }
+
+  const getItemTemplate = (item, index) => {
+    const title = item.querySelector('[data-ui-title]')
+    return `
+        <li>
+          <a href='#${getAnchorId(index)}'>${title.innerHTML}</a>
+    </li>
+  `
+  }
+
+  const createList = () => {
+    sections.forEach((section, index) => {
+      list.insertAdjacentHTML('beforeend', getItemTemplate(section, index))
+    })
+  }
+
+  const initPageNavigation = () => {
+    if (!sections.length || !nav || !toggle) return
+    list = nav.querySelector('ul')
+    if (!list) return
+
+    createList()
+    createAnchorsId()
+    toggle.addEventListener('click', () => {
+      if (nav.classList.contains('is-open')) {
+        nav.classList.remove('is-open')
+        toggle.innerHTML = '+'
+      } else {
+        nav.classList.add('is-open')
+        toggle.innerHTML = '-'
+      }
+    })
+  }
+
+  const copyCodeToClipboard = (code) => {
+    navigator.clipboard.writeText(code).then(
+      () => {
+        // eslint-disable-next-line no-console
+        console.debug('Код скопирован в буфер обмена')
+      },
+      () => {
+        // eslint-disable-next-line no-console
+        console.error('Не удалось скопировать код')
+      }
+    )
+  }
+
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('[data-copy-code-btn]')
+    if (target) {
+      const parent = target.parentElement
+      const codeEl = parent.querySelector('code')
+      const code = codeEl.innerText.trim()
+      copyCodeToClipboard(code)
+    }
+  })
+
+  initPageNavigation()
+</script>

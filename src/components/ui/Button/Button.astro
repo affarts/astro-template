@@ -1,28 +1,51 @@
 ---
-import type { HTMLTag, Polymorphic } from 'astro/types'
+import { Icon } from 'astro-icon/components'
+import type { HTMLTag } from 'astro/types'
+import type { ButtonProps } from './Button'
 
-type Props<Tag extends HTMLTag> = Polymorphic<
-  { as: Tag } & {
-    form?: string // Which form should submit
-    type?: string
-    text?: string
-    className?: string
-    main?: boolean // If you are using custom button set false
-  }
->
+type Props<Tag extends HTMLTag> = ButtonProps<Tag> & {}
 
 const {
   as: Tag = 'button',
   main = true,
   className,
   text,
+  spinner,
+  size,
+  mods,
+  modal,
+  icon,
+  iconPosition,
+  external,
   ...props
 } = Astro.props
 ---
 
-<Tag class:list={[{ btn: main }, className]} {...props}>
-  <slot name="icon_left" />
-  {text}
+<Tag
+  class:list={[
+    {
+      btn: main
+    },
+    size && `btn--${size}`,
+    mods && mods.map((mod: string) => `btn--${mod}`),
+    className
+  ]}
+  target={external ? '_blank' : null}
+  rel={external ? 'nofollow noopener noreferrer' : null}
+  data-open-modal={modal}
+  {...props}
+>
+  <slot name="icon-left" />
+  {icon && iconPosition === 'left' && <Icon name={icon} />}
+  {text && <span>{text}</span>}
   <slot name="content" />
-  <slot name="icon_right" />
+  <slot name="icon-right" />
+  {icon && iconPosition === 'right' && <Icon name={icon} />}
+  {
+    spinner && (
+      <span class="btn__spinner">
+        <Icon name="spinner-round-40" />
+      </span>
+    )
+  }
 </Tag>

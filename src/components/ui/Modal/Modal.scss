@@ -1,137 +1,99 @@
-/* stylelint-disable declaration-no-important */
-@use "../../../assets/styles/utils/variables";
-@use "../../../assets/styles/utils/mixins";
-@use "../../../assets/styles/utils/functions";
-
-.modal-wrapper {
+.modal {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
+  z-index: 1000;
+
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  width: 100%;
-  height: 100%;
-  padding: functions.pxToRem(16px);
-  z-index: 9999;
-  background-color: transparent;
-  pointer-events: none;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  transform: scale(1.1);
+  visibility: hidden;
   opacity: 0;
-  transition: all 500ms ease;
 
-  &.is-visible {
-    opacity: 1;
-    background: variables.$color-black;
-    pointer-events: all;
+  transition: opacity 0.6s cubic-bezier(0.55, 0, 0.1, 1), transform 0.6s cubic-bezier(0.55, 0, 0.1, 1), visibility 0.6s cubic-bezier(0.55, 0, 0.1, 1);
 
-    .modal {
-      transform: translateY(0);
-      opacity: 1;
-      visibility: visible;
-    }
+  pointer-events: none;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 
-  @include mixins.min-1024 {
+  &__wrapper {
+    transform: translateZ(0);
+    background-color: rgba(#333333, 0.6);
+    position: relative;
+
+    display: flex;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
-
-    &--toc {
-      position: relative;
-      pointer-events: all;
-      z-index: 1;
-      padding: 0;
-      height: auto;
-      opacity: 1;
-    }
+    width: 100%;
+    min-height: 100%;
+    padding: 60px 40px;
   }
-}
 
-.modal {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding:
-    variables.$inner-block-spacing-l functions.pxToRem(16px)
-    functions.pxToRem(16px) functions.pxToRem(16px);
-  border-radius: variables.$big-blocks-corner;
-  background: variables.$color-white;
-  transform: translateY(100%);
-  transition: all 600ms ease;
-
-  & > button {
+  &__overlay {
     position: absolute;
-    right: functions.pxToRem(16px);
-    top: functions.pxToRem(16px);
-  }
+    top: 0;
+    left: 0;
 
-  &__header {
-    display: block;
-    text-align: center;
-    max-width: 70%;
-    margin: 0 auto functions.pxToRem(16px);
-  }
-
-  &__body {
-    display: block;
-    margin: 0 auto;
-  }
-
-  &__footer {
-    margin-top: variables.$inner-block-spacing-m;
-
-    button {
-      width: 100%;
-    }
-  }
-
-  .simplebar-scrollbar::before {
-    top: functions.pxToRem(16px) !important;
-    bottom: functions.pxToRem(16px) !important;
-    right: 4px !important;
-  }
-
-  @include mixins.max-1024 {
     width: 100%;
+    height: 100%;
 
-    &--toc {
-      position: fixed !important;
-      width: 100%;
-      height: auto;
-      max-height: 70vh;
-      padding: functions.pxToRem(24px) functions.pxToRem(16px);
-      bottom: 0;
-      left: 0;
-      background-color: variables.$color-white;
-      border-radius: functions.pxToRem(12px) functions.pxToRem(12px) 0 0;
-      overflow: hidden auto;
-      visibility: hidden;
-      opacity: 0;
-      z-index: 99;
-      transform: translateY(100%);
+    cursor: pointer;
+  }
+
+  &__content {
+    position: relative;
+
+    width: 600px;
+    padding: 40px;
+
+    border-radius: 20px;
+    background-color: #ffffff;
+  }
+
+  &__close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    // Стили только для компонентов в проекте удалите их
+
+    min-width: auto;
+    padding: 5px;
+
+    //--------------------------------------
+
+    svg {
+      display: block;
+      width: 24px;
+      height: 24px;
     }
   }
 
-  @include mixins.min-1024 {
-    padding:
-      variables.$inner-block-spacing-l functions.pxToRem(24px)
-      functions.pxToRem(24px) functions.pxToRem(24px);
-    max-width: functions.pxToRem(688px);
-    width: 100%;
+  &--preload {
+    transition: none;
+  }
 
-    & > button {
-      right: functions.pxToRem(24px);
-      top: functions.pxToRem(24px);
-    }
+  &.is-active {
+    transform: scale(1);
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.6s cubic-bezier(0.55, 0, 0.1, 1), transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
 
-    &__header {
-      margin: 0 auto functions.pxToRem(24px);
-    }
+    pointer-events: auto;
+  }
 
-    &--toc {
-      all: unset;
-      width: 100%;
-      height: auto;
-      max-height: 80vh;
-    }
+  iframe {
+    max-width: 100%;
+    border: none;
   }
 }

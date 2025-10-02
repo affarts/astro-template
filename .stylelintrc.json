@@ -70,7 +70,12 @@
     "annotation-no-unknown": true,
     "at-rule-no-unknown": null,
     "declaration-property-value-no-unknown": true,
-    "function-no-unknown": true,
+    "function-no-unknown": [
+      true,
+      {
+        "ignoreFunctions": ["/pxToRem/"]
+      }
+    ],
     "media-feature-name-no-unknown": true,
     "media-feature-name-value-no-unknown": true,
     "no-unknown-custom-properties": null,
@@ -102,7 +107,12 @@
 
     "value-no-vendor-prefix": true,
 
-    "function-name-case": "lower",
+    "function-name-case": [
+      "lower",
+      {
+        "ignoreFunctions": ["/^pxToRem/"]
+      }
+    ],
     "selector-type-case": "lower",
     "value-keyword-case": [
       "lower",
