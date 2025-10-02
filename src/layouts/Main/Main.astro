@@ -11,10 +11,13 @@ const { title } = Astro.props
 ---
 
 <Layout title={title}>
-  <Header />
-  <main>
-    <slot />
-  </main>
-  <Footer />
+  <div class="wrapper">
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </div>
+  <slot name="fixed" />
   <slot name="modals" />
 </Layout>

@@ -14,6 +14,8 @@ html {
   scroll-behavior: smooth;
   font-style: normal;
   font-weight: 400;
+  font-family: variables.$font-main;
+  color: variables.$color-black;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // оптимизация выравнивания шрифта относительно центра строки
@@ -26,7 +28,22 @@ html {
 }
 
 body {
-  position: relative;
-  font-family: variables.$font-main;
-  color: variables.$color-black;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  background-color: variables.$color-white;
+}
+
+.wrapper {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: variables.$height-100vh;
+}
+
+main {
+  flex-grow: 1;
+  width: 100%;
+  min-width: 100%;
 }
