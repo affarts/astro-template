@@ -1,13 +1,24 @@
 ---
 // Data & Types
+import { globalImages } from '@data/global'
 
 // Component
 import Container from '@components/Container/Container'
 import Main from '@layouts/Main/Main'
+import ResponsivePicture from '@ui/ResponsivePicture/ResponsivePicture'
 ---
 
 <Main title="Affarts — UX/UI, Дизайн, Разработка для ваших продуктов">
   <Container>
     <h1>Main page</h1>
+    <h2>Пример вызова ResponsivePicture</h2>
+    <ResponsivePicture
+      formats={['webp', 'png']}
+      sources={[
+        { image: globalImages.imgSample1, media: '(min-width: 768px)' },
+        { image: globalImages.imgSample1Mobile, media: '(max-width: 767px)' }
+      ]}
+      alt=""
+    />
   </Container>
 </Main>
