@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config'
 import icon from 'astro-icon'
-import sassGlobImports from 'vite-plugin-sass-glob-import'
+import { sassGlobPlugin } from './plugins/sassGlobPlugin.js'
 
 // https://astro.build/config
 export default defineConfig({
@@ -41,6 +41,7 @@ export default defineConfig({
     host: true
   },
   vite: {
+    // plugins: [sassGlobPlugin()],
     server: {
       host: true,
       port: 4321,
@@ -52,7 +53,8 @@ export default defineConfig({
     },
     resolve: {
       alias: {
-        '@scss': '/src/assets/styles/'
+        '@scss': '/src/assets/styles/',
+        'simplebar/dist/simplebar.css': 'simplebar-core/dist/simplebar.css'
       }
     },
     build: {
@@ -63,9 +65,8 @@ export default defineConfig({
         output: {
           entryFileNames: 'assets/scripts.js',
           assetFileNames: (assetInfo) => {
-            return assetInfo.name === 'index.css'
-              ? 'assets/style.css'
-              : `assets/${assetInfo.name}`
+            const name = assetInfo.names?.[0] || assetInfo.name
+            return name === 'index.css' ? 'assets/style.css' : `assets/${name}`
           }
           // use to split vendor js into separate chunks
           // manualChunks: (id) => {
@@ -106,10 +107,14 @@ export default defineConfig({
         }
       }
     },
-    plugins: [sassGlobImports()],
     css: {
-      devSourcemap: true,
-      transformer: 'postcss'
+      preprocessorOptions: {
+        scss: {
+          importers: [sassGlobPlugin()]
+        }
+      },
+      devSourcemap: true
+      // transformer: 'postcss'
     }
   }
 })

@@ -1,6 +1,4 @@
 ---
-import 'src/assets/styles/main.scss'
-
 interface Props {
   title: string
 }
@@ -18,8 +16,30 @@ const { title } = Astro.props
     <meta name="generator" content={Astro.generator} />
     <script src="/src/assets/js/Main.js"></script>
     <title>{title}</title>
+    <noscript>
+      <style>
+        /**
+        * Reinstate scrolling for non-JS clients
+        */
+        .simplebar-content-wrapper {
+          scrollbar-width: auto;
+          -ms-overflow-style: auto;
+        }
+
+        .simplebar-content-wrapper::-webkit-scrollbar,
+        .simplebar-hide-scrollbar::-webkit-scrollbar {
+          display: initial;
+          width: initial;
+          height: initial;
+        }
+      </style>
+    </noscript>
   </head>
   <body>
     <slot />
   </body>
 </html>
+
+<style lang="scss" is:global>
+  @use '/src/assets/styles/main.scss' as *;
+</style>

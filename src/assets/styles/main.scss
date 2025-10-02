@@ -11,10 +11,10 @@
 // Animations
 @use "animations/easing";
 @use "animations/keyframe";
+@use "wysiwyg";
 
 /*** Components ***/
-@use "../../components/**/*";
+@use "/src/components/**/*.scss" as *;
 
 // Other
-@use "./other/**/*";
-@use "wysiwyg";
+@use "/src/assets/styles/other/**/*.scss" as *;

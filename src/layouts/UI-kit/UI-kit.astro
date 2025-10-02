@@ -1,4 +1,7 @@
 ---
+import logoImg from '@images/logo.svg'
+import { Image } from 'astro:assets'
+
 import Layout from '@layouts/root/root'
 import Container from '@components/Container/Container'
 ---
@@ -7,7 +10,7 @@ import Container from '@components/Container/Container'
   <header class="ui-header">
     <Container>
       <div class="ui-header__logo">
-        <img src="/src/assets/images/logo.svg" alt="logo" />
+        <Image src={logoImg} alt="logo" />
       </div>
     </Container>
   </header>
