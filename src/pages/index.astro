@@ -1,24 +1,73 @@
 ---
 // Data & Types
-import { globalImages } from '@data/global'
 
 // Component
 import Container from '@components/Container/Container'
 import Main from '@layouts/Main/Main'
-import ResponsivePicture from '@ui/ResponsivePicture/ResponsivePicture'
+import Picture from '@ui/Picture/Picture'
 ---
 
 <Main title="Affarts — UX/UI, Дизайн, Разработка для ваших продуктов">
   <Container>
     <h1>Main page</h1>
     <h2>Пример вызова ResponsivePicture</h2>
-    <ResponsivePicture
-      formats={['webp', 'png']}
+    <!-- <ResponsivePicture
+      formats={['webp', 'jpg']}
       sources={[
         { image: globalImages.imgSample1, media: '(min-width: 768px)' },
         { image: globalImages.imgSample1Mobile, media: '(max-width: 767px)' }
       ]}
       alt=""
+    /> -->
+    <!-- <ResponsivePicture
+      formats={['webp', 'jpg']}
+      sources={[
+        { image: globalImages.imgSample1 }
+      ]}
+      alt=""
+    /> -->
+    <h2>Пример вызова Picture</h2>
+    <Picture
+      src="/Cards/card.png"
+      srcset={[
+        {
+          source: '/Cards/card-mobile.png',
+          media: '(max-width: 767px)',
+          width: 188
+        },
+        {
+          source: '/Cards/card-tablet.png',
+          media: '(min-width: 768px) and (max-width: 1023px)',
+          width: 348
+        }
+      ]}
+      width={477}
+      densities={[2]}
+      alt="Sample image 1"
+      formats={['webp']}
+    />
+    <Picture
+      src="sample-image-1.jpg"
+      width={390}
+      densities={[2]}
+      alt="Sample image 1"
+      formats={['webp']}
+      prodMode={true}
+    />
+    <Picture
+      src="sample-image-1-mobile.jpg"
+      srcset={[
+        {
+          source: 'sample-image-1.jpg',
+          media: '(min-width: 768px)',
+          width: 390
+        }
+      ]}
+      width={366}
+      densities={[2]}
+      alt="Sample image 1"
+      formats={['webp']}
+      prodMode={true}
     />
   </Container>
 </Main>
